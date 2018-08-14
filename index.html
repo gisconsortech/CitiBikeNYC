@@ -65,7 +65,7 @@
           });
           map.addLayer(routeVector);
           */
-          stopVector = new OpenLayers.Layer.Vector("Bus Stops", {
+          stopVector = new OpenLayers.Layer.Vector("Bike Stops", {
               style: {
                   fillColor: "red",
                   strokeColor: "black",
@@ -98,8 +98,8 @@
           FMEServer.customRequest(
             "https://agic2018-consortechcloud.fmecloud.com/fmedatastreaming/AGIC/CitiBikeNYC_Ex1_End.fmw?", "GET",
             function(json){
-              busRoutes = format.read(JSON.stringify(json));
-              routeVector.addFeatures(busRoutes);
+              bikeStations = format.read(JSON.stringify(json));
+              stopVector.addFeatures(bikeStations);
             }
           );
 
