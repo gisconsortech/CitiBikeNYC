@@ -95,13 +95,13 @@
           // the workspace name: GeoJson.fmw
           // Parameter in this case which layer: ?FEATURE_TYPES=Default.BusRoutes
 
-          FMEServer.customRequest(
+          setInterval(FMEServer.customRequest(
             "https://agic2018-consortechcloud.fmecloud.com/fmedatastreaming/AGIC/CitiBikeNYC_Ex1_End.fmw?", "GET",
             function(json){
               bikeStations = format.read(JSON.stringify(json));
               stopVector.addFeatures(bikeStations);
             }
-          );
+          ), 5000);
 
         }
       </script>
