@@ -17,13 +17,8 @@
         var busRoutes, busStops;
         var fmeserverurl;
 
-        function timedRefresh(timeoutPeriod) {
-	        setTimeout("location.reload(true);",timeoutPeriod);
-        }
-
         window.onload = function() {
           
-          timedRefresh(5000);
           //jQuery.getJSON("http://demos.fmeserver.com.s3.amazonaws.com/server-demo-config.json", function(config) {
             // Initialize the FME Server Connection Object
           FMEServer.init('https://agic2018-consortechcloud.fmecloud.com','a0b7c1d71170c7ef6643c885134c71e39016e428');
