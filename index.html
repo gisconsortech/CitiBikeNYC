@@ -16,43 +16,10 @@
         var fromProjection, toProjection;
         var busRoutes, busStops;
         var fmeserverurl;
+        var toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+        var vector;
         
         function reload() {
-          
-        }
-        window.onload = function() {
-          
-          //jQuery.getJSON("http://demos.fmeserver.com.s3.amazonaws.com/server-demo-config.json", function(config) {
-            // Initialize the FME Server Connection Object
-          FMEServer.init('https://agic2018-consortechcloud.fmecloud.com','a0b7c1d71170c7ef6643c885134c71e39016e428');
-          fmeserverurl = 'https://agic2018-consortechcloud.fmecloud.com';
-          init();
-          //});
-        }
-        
-        function init() {
-        
-          
-
-          // Set-up Map
-          map = new OpenLayers.Map('map');
-          map.addControl(new OpenLayers.Control.LayerSwitcher());
-          map.addControl(new OpenLayers.Control.MousePosition());
-          var zoom = 12;
-          
-          // Open Street Map Basemap
-          var mapnik = new OpenLayers.Layer.OSM();
-          
-          fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-
-          // EPSG:900913 is the projection for Open Street Map
-          toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-          var position = new OpenLayers.LonLat(-73.9352, 40.7355).transform(fromProjection, toProjection);
-
-          map.addLayer(mapnik);
-          map.setCenter(position, zoom);
-          
-          
           stopVector = new OpenLayers.Layer.Vector("Bike Stops", {
               style: {
                   fillColor: "red",
@@ -90,6 +57,47 @@
               stopVector.addFeatures(bikeStations);
             }
           );
+
+          if (vector) {
+            map.removeLayer(vector);
+          }
+          vector = stopVector;
+        }
+        window.onload = function() {
+          
+          //jQuery.getJSON("http://demos.fmeserver.com.s3.amazonaws.com/server-demo-config.json", function(config) {
+            // Initialize the FME Server Connection Object
+          FMEServer.init('https://agic2018-consortechcloud.fmecloud.com','a0b7c1d71170c7ef6643c885134c71e39016e428');
+          fmeserverurl = 'https://agic2018-consortechcloud.fmecloud.com';
+          init();
+          reload();
+          window.setInterval(reload, 5000);
+          //});
+        }
+        
+        function init() {
+        
+          
+
+          // Set-up Map
+          map = new OpenLayers.Map('map');
+          map.addControl(new OpenLayers.Control.LayerSwitcher());
+          map.addControl(new OpenLayers.Control.MousePosition());
+          var zoom = 12;
+          
+          // Open Street Map Basemap
+          var mapnik = new OpenLayers.Layer.OSM();
+          
+          fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+
+          // EPSG:900913 is the projection for Open Street Map
+          var position = new OpenLayers.LonLat(-73.9352, 40.7355).transform(fromProjection, toProjection);
+
+          map.addLayer(mapnik);
+          map.setCenter(position, zoom);
+          
+          
+          
 
         }
       </script>
