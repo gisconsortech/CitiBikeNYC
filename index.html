@@ -1,6 +1,6 @@
 <html>
   <head>
-    <meta charset="utf-8"> <!--http-equiv="refresh" content="5"-->>
+    <meta charset="utf-8">
     <title>NYC Citi Bikes</title>
 
   </head>
@@ -16,7 +16,10 @@
         var fromProjection, toProjection;
         var busRoutes, busStops;
         var fmeserverurl;
-
+        
+        function reload() {
+          
+        }
         window.onload = function() {
           
           //jQuery.getJSON("http://demos.fmeserver.com.s3.amazonaws.com/server-demo-config.json", function(config) {
@@ -49,22 +52,7 @@
           map.addLayer(mapnik);
           map.setCenter(position, zoom);
           
-          // Set the layers up with appropriate styling, line and point features
-          /*routeVector = new OpenLayers.Layer.Vector("Bus Routes", {
-              style: {
-                  strokeColor: "blue",
-                  strokeWidth: 2,
-                  cursor: "pointer"
-              },
-              eventListeners: {
-                  "featuresadded": function(event) {
-                      this.map.zoomToExtent(this.getDataExtent());
-                  }
-              },
-              projection: toProjection,
-          });
-          map.addLayer(routeVector);
-          */
+          
           stopVector = new OpenLayers.Layer.Vector("Bike Stops", {
               style: {
                   fillColor: "red",
@@ -73,11 +61,11 @@
                   pointRadius : 4,
                   cursor: "pointer"
               },
-              eventListeners: {
-                  "featuresadded": function(event) {
-                      this.map.zoomToExtent(this.getDataExtent());
-                  }
-              },
+              //eventListeners: {
+                  //"featuresadded": function(event) {
+                      //this.map.zoomToExtent(this.getDataExtent());
+                  //}
+              //},
               projection: toProjection,
           });
           map.addLayer(stopVector);
@@ -95,13 +83,13 @@
           // the workspace name: GeoJson.fmw
           // Parameter in this case which layer: ?FEATURE_TYPES=Default.BusRoutes
 
-          setInterval(FMEServer.customRequest(
+          FMEServer.customRequest(
             "https://agic2018-consortechcloud.fmecloud.com/fmedatastreaming/AGIC/CitiBikeNYC_Ex1_End.fmw?", "GET",
             function(json){
               bikeStations = format.read(JSON.stringify(json));
               stopVector.addFeatures(bikeStations);
             }
-          ), 5000);
+          );
 
         }
       </script>
