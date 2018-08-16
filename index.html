@@ -55,13 +55,14 @@
             function(json){
               bikeStations = format.read(JSON.stringify(json));
               stopVector.addFeatures(bikeStations);
+              if (vector) {
+                map.removeLayer(vector);
+              }
+              vector = stopVector;
             }
           );
 
-          if (vector) {
-            map.removeLayer(vector);
-          }
-          vector = stopVector;
+          
         }
         window.onload = function() {
           
